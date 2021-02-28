@@ -18,7 +18,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category_name = models.ForeignKey(Category, related_name='products', verbose_name="category_name", on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='products', verbose_name="category_name", on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100, verbose_name='product_name')
     image = models.ImageField(upload_to='products/', blank=True, verbose_name='image')
     description = models.TextField(blank=True, verbose_name='description')
@@ -28,10 +28,10 @@ class Product(models.Model):
     
 
 class Choice(models.Model):
-    product_name = models.ForeignKey(Product, related_name='product', verbose_name='item', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='product', verbose_name='item', on_delete=models.CASCADE)
     size = models.CharField(max_length=4, verbose_name='size')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='price')
 
     def __str__(self):
-        return str(self.product_name),  str(self.size)
+        return '{} {}'.format(self.product, self.size)
     
